@@ -17,4 +17,8 @@
     git remote add origin repo-url
     git push -u origin master
     ```
-5. 
+5. Create a "home" controller with a "page" method + a "page.html.erb" file in app/views/home
+    ```
+    rails g controller home page
+    ```
+6. Change root in config/routes.rb:
