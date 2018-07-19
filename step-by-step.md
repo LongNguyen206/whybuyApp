@@ -32,3 +32,6 @@
 8. Install Simple Form:
 
     https://github.com/plataformatec/simple_form
+9. Install Devise:
+    
+    https://github.com/plataformatec/devise
