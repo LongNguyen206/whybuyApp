@@ -11,8 +11,12 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 # Use Devise
 gem 'devise'
+# Use Google-Omniauth-2
+gem 'omniauth-google-oauth2'
 # Use Bootstrap
 gem 'bootstrap-sass', '~> 3.3.7'
+# User PureCSS
+gem 'purecss-sass'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use jQuery

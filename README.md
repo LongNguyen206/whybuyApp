@@ -1,6 +1,6 @@
-# README
+# TODOS
 
-1. Add uniqueness to user emails. If user tries to register with existing email, offer to remind the password
-2. Dynamic routes
-3. Comment code
-4. Admin account to create product categories
+1. Dynamic routes
+2. Comment code
+3. Admin account to create product categories
+4. Configure confimable (devise)
