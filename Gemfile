@@ -11,6 +11,10 @@ gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 # Use Devise
 gem 'devise'
+# Use devise_zxcvbn
+gem 'devise_zxcvbn'
+# Use Uncommon passwords
+gem 'devise-uncommon_password'
 # Use Google-Omniauth-2
 gem 'omniauth-google-oauth2'
 # Use Bootstrap

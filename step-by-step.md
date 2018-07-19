@@ -22,10 +22,8 @@
     ```
     rails g controller home page
     ```
-6. Change root in config/routes.rb:
-    ```
-    root 'home#page'
-    ```
+6. Change root path in config/routes.rb
+ 
 7. Install and configure Bootstrap-Sass:
 
     https://github.com/twbs/bootstrap-sass
@@ -57,7 +55,7 @@
 16. Install and configure PureCSS-Sass:
 
     https://github.com/rubysamurai/purecss-sass
-17. Add Pure horizontal menu to newly created _navbar.html.erb (in views/layouts) and change it accordingly:
+17. Add Pure horizontal menu to created _navbar.html.erb (in views/layouts) and change it accordingly (log in, log out and sign up buttons):
 
     https://purecss.io/menus/
 18. Render navbar in application.html.erb:
@@ -69,4 +67,10 @@
     rails g scaffold Profile user:references first_name last_name gender dob:date occupation description:text
     rails db:migrate
     ```
-20.
+20. Install and configure Devise-uncommon_passwords and Devise_zxcvbn gems:
+
+    https://github.com/HCLarsen/devise-uncommon_password
+    https://github.com/bitzesty/devise_zxcvbn
+21. Add custom sign_in and sign_out devise routes by uncommenting and changing scoped views to true in config/initializers/devise.rb, and adding relevant routes to routes.rb
+22. Add "navbar-btns" class to authentication links in navbar and style them to float to the right
+
