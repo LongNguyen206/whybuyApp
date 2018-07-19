@@ -39,6 +39,11 @@
     ```
     git checkout -b dev
     ```
+    General solo workflow:
+    1. Work on dev branch
+    2. Add and commit
+    3. Merge with local master
+    4. Push to remote master
 11. Generate USER Devise model:
     ```
     rails g devise USER
@@ -59,3 +64,9 @@
     ```
     <%= render 'layouts/navbar' %>
     ```
+19. Create scaffold for Profiles:
+    ```
+    rails g scaffold Profile user:references first_name last_name gender dob:date occupation description:text
+    rails db:migrate
+    ```
+20.
