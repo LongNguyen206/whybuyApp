@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   resources :profiles
 
-  devise_scope :user do
+  devise_for :users, skip: [:sessions]
+  as :user do
     # custom path to login/sign_in
-    get "/sign_in" => "devise/sessions#new"
-    # custom path to sign_up/registration
-    get "/sign_up" => "devise/registrations#new", as: "new_user_registration" 
+    get '/sign_in', to: 'users/sessions#new', as: :new_user_session
+    post '/sign_in', to: 'users/sessions#create', as: :user_session
+    # custom path to sign_out
+    delete '/sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
   end
-
-  devise_for :users
   root 'home#page'
 end

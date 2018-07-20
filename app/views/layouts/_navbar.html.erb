@@ -9,7 +9,7 @@
     <!-- else - show Sign Up and Log In button -->
     <% else %>
         <li class="pure-menu-item"><%= link_to "Sign up", new_user_registration_path, class: "pure-menu-link" %></li>
-        <li class="pure-menu-item"><%= link_to 'Log In', sign_in_path, class: "pure-menu-link" %></li>
+        <li class="pure-menu-item"><%= link_to 'Log In', new_user_session_path, class: "pure-menu-link" %></li>
     <% end %>
     </ul>
 </div>

@@ -73,4 +73,12 @@
     https://github.com/bitzesty/devise_zxcvbn
 21. Add custom sign_in and sign_out devise routes by uncommenting and changing scoped views to true in config/initializers/devise.rb, and adding relevant routes to routes.rb
 22. Add "navbar-btns" class to authentication links in navbar and style them to float to the right
-
+23. Create devise Users controller:
+    ```
+    rails g devise:controllers users
+    ```
+24. Copy devise views into views/users (created). All devise views for users are controlled from here
+25. Add after_sign_up_path_for method to app/controllers/users/registrations_controller.rb
+26. Add after_sign_out_path_for private method to app/controllers/application_controller.rb
+27. Add after_sign_in_path_for private method to app/controllers/application_controller.rb
+28. 
