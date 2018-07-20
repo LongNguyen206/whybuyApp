@@ -3,3 +3,5 @@ Signed in as <%= current_user.email %>
 <% else%>
 Please sign in
 <%end%>
+<br>
+<%= link_to 'Create Profile', new_profile_path %>

@@ -78,7 +78,10 @@
     rails g devise:controllers users
     ```
 24. Copy devise views into views/users (created). All devise views for users are controlled from here
-25. Add after_sign_up_path_for method to app/controllers/users/registrations_controller.rb
-26. Add after_sign_out_path_for private method to app/controllers/application_controller.rb
-27. Add after_sign_in_path_for private method to app/controllers/application_controller.rb
-28. 
+25. Add after_sign_up_path_for method to app/controllers/users/registrations_controller.rb and application_controller.rb
+26. Add after_inactive_sign_up_path_for private method to app/controllers/application_controller.rb and application_controller.rb
+27. Add profile's destroy dependency to user's model (app/models/user.rb)
+28. Disallow user_id parameter in app/controllers/profiles_controller.rb, profile_params method
+29. Comment out User association in profile's _form.html.erb, show user email instead of user object in profile's index.html.erb and show.html.erb (app/views/profiles)
+30. Link current user's id to profile's user_id in "create" method in app/controllers/profiles_controller.rb
+31. Add link to user's profile page in navbar (app/views)

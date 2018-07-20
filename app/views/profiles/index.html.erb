@@ -19,7 +19,7 @@
   <tbody>
     <% @profiles.each do |profile| %>
       <tr>
-        <td><%= profile.user %></td>
+        <td><%= profile.user.email %></td> <%#change user's object to show user's email%>
         <td><%= profile.first_name %></td>
         <td><%= profile.last_name %></td>
         <td><%= profile.gender %></td>
