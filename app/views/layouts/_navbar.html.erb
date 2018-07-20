@@ -5,10 +5,15 @@
     <ul class="navbar-btns pure-menu-list">
     <!-- if user is signed in - show Log Out button -->
     <% if user_signed_in? %> 
-        <!-- show a link to user's profile page-->
-        <li class="pure-menu-item"><%= link_to "#{current_user.email}", profile_path(current_user.profile.id), class: "pure-menu-link" %></li>
+        <!-- prompt user to create a profile if they dont have one-->
+        <% if current_user.profile.nil? %>
+            <li class="pure-menu-item"><%= link_to 'Create Profile', new_profile_path, class: "pure-menu-link" %></li>
+        <!-- otherwise, show a link to user's profile page-->
+        <% else %>
+            <li class="pure-menu-item"><%= link_to "#{current_user.email}", profile_path(current_user.profile.id), class: "pure-menu-link" %></li>
+        <% end %>
         <li class="pure-menu-item"><%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "pure-menu-link" %></li>
-    <!-- else - show Sign Up and Log In button -->
+    <!-- if user not signed in - show Sign Up and Log In buttons -->
     <% else %>
         <li class="pure-menu-item"><%= link_to "Sign up", new_user_registration_path, class: "pure-menu-link" %></li>
         <li class="pure-menu-item"><%= link_to 'Log In', new_user_session_path, class: "pure-menu-link" %></li>

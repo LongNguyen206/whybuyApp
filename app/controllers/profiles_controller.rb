@@ -1,5 +1,6 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :profile_exists, only: [:new, :create]
 
   # GET /profiles
   # GET /profiles.json
@@ -69,10 +70,18 @@ class ProfilesController < ApplicationController
       @profile = Profile.find(params[:id])
     end
 
+    def profile_exists
+      if current_user.profile
+        respond_to do |format|
+          format.html { redirect_to root_path, notice: 'You already have a profile'}
+        end
+      end
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     
     # Got rid of :user_id permitted parameter to avoid user assigning profile to different user
     def profile_params
-      params.require(:profile).permit(:first_name, :last_name, :gender, :dob, :occupation, :description)
+      params.require(:profile).permit(:first_name, :last_name, :gender, :dob, :phone, :occupation, :description)
     end
 end

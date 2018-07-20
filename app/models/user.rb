@@ -3,11 +3,8 @@ class User < ApplicationRecord
   # :lockable, :timeoutable, :confirmable, :uncommon_password, :zxcvbnable
   devise :database_authenticatable, :registerable, 
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
-
+ 
   #deleting a user will delete the associated profile
   has_one :profile, dependent: :destroy
-  
-  # def weak_words
-  #   ['qwerty']
-  # end
+
 end

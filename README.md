@@ -9,3 +9,4 @@
 9. split profile registration into stages, compulsory and later
 10. updating profile and email and password features
 11. Profile form regex validations (numbers in names etc)
+12. friendly id
