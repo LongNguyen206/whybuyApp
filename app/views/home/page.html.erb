@@ -1,7 +1,7 @@
 <% if user_signed_in?%>
 Signed in as <%= current_user.email %>
+<br>
+<%= link_to 'Create Profile', new_profile_path %>
 <% else%>
 Please sign in
 <%end%>
-<br>
-<%= link_to 'Create Profile', new_profile_path %>
