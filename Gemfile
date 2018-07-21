@@ -18,7 +18,7 @@ gem 'devise-uncommon_password'
 # Use Google-Omniauth-2
 gem 'omniauth-google-oauth2'
 # Use Bootstrap
-gem 'bootstrap-sass', '~> 3.3.7'
+gem 'bootstrap', '~> 4.1.1'
 # User PureCSS
 gem 'purecss-sass'
 # Use SCSS for stylesheets

@@ -10,3 +10,6 @@
 10. updating profile and email and password features
 11. Profile form regex validations (numbers in names etc)
 12. friendly id
+13. add dependent destoy to profiles so when user deletes profile, user is also deleted
+14. search as i move map
+15. add counter_cache to listings, reviews ,etc

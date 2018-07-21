@@ -1,7 +1,11 @@
 // "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
-@import "bootstrap-sprockets";
+$theme-colors: ( "bootstrap": #563d7c, "simpleform": #00617f );
+
 @import "bootstrap";
 @import 'purecss';
+
+// simple_form helpers
+@import "simple_form-bootstrap/simple_form-bootstrap";
 
 .navbar-btns {
     float: right;

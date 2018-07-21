@@ -5,6 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
  
   #deleting a user will delete the associated profile
-  has_one :profile, dependent: :destroy
+  has_one :profile, validate: true, dependent: :destroy, inverse_of: :user
 
 end
