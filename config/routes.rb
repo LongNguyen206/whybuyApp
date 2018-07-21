@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :profiles
-
+  devise_for :admins
+  
   devise_for :users, skip: [:sessions]
   as :user do
     # custom path to login/sign_in
@@ -9,5 +9,8 @@ Rails.application.routes.draw do
     # custom path to sign_out
     delete '/sign_out', to: 'users/sessions#destroy', as: :destroy_user_session
   end
+  
   root 'home#page'
+  get 'admin', to: 'home#admin', as: :admin_home
+  resources :profiles
 end
