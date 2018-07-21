@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   root "home#page"
 
   resources :profiles
-  # add a custom /profile route to 'show' action in profiles_controller.rb
+  # add a custom /profile route to 'show' and 'edit' action in profiles_controller.rb
   get '/profile', to: 'profiles#show', as: :my_profile
   get '/profile/edit', to: 'profiles#edit', as: :edit_my_profile
 end

@@ -4,7 +4,9 @@
 
   <div class="form-inputs">
     <%# Do not show user association when creating a profile%>
-    <%# f.association :user %>
+    <% if admin_signed_in?%>
+      <%= f.association :user, :label_method => :email %>
+    <% end %>
     <%= f.input :first_name %>
     <%= f.input :last_name %>
     <%= f.input :gender, as: :radio_buttons, collection: ['Male', 'Female', 'Other'], wrapper: :vertical_collection_inline %>

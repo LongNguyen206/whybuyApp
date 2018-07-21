@@ -1,7 +1,9 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :profile_exists, only: [:new, :create]
+  # this will prevent normal users from viewing the list of all profiles
   before_action :admin_restriction, only: [:index]
+  
   # GET /profiles
   # GET /profiles.json
   def index
@@ -25,13 +27,18 @@ class ProfilesController < ApplicationController
   # POST /profiles
   # POST /profiles.json
   def create
-    @profile = Profile.new(profile_params)
+    # allow user_id assignment to admin, admin can create any users' profile
+    if admin_signed_in?
+      @profile = Profile.new(admin_profile_params)
+    # prevent mass assignemnt for normal users
+    else
+      @profile = Profile.new(profile_params)
     # link current user's id to the user_id of the profile being created
-    @profile.user_id = current_user.id
-
+      @profile.user_id = current_user.id
+    end
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to my_profile_url, notice: 'Profile was successfully created.' }
+        format.html { redirect_to profile_url(@profile), notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -45,7 +52,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to my_profile_url, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -84,9 +91,11 @@ class ProfilesController < ApplicationController
     end
 
     def profile_exists
-      if current_user.profile
-        respond_to do |format|
-          format.html { redirect_to root_url, notice: 'You already have a profile'}
+      unless admin_signed_in?
+        if current_user.profile
+          respond_to do |format|
+            format.html { redirect_to root_url, notice: 'You already have a profile'}
+          end
         end
       end
     end
@@ -96,5 +105,9 @@ class ProfilesController < ApplicationController
     # Got rid of :user_id permitted parameter to avoid user assigning profile to different user
     def profile_params
       params.require(:profile).permit(:first_name, :last_name, :gender, :dob, :phone, :occupation, :description)
+    end
+    # but allow user assignment to admin
+    def admin_profile_params
+      params.require(:profile).permit(:user_id, :first_name, :last_name, :gender, :dob, :phone, :occupation, :description)
     end
 end

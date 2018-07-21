@@ -13,3 +13,5 @@
 13. add dependent destoy to profiles so when user deletes profile, user is also deleted
 14. search as i move map
 15. add counter_cache to listings, reviews ,etc
+16. time spent on project (use wakatime)
+17. prevent users registereing as admins
