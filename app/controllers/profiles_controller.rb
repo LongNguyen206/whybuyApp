@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :profile_exists, only: [:new, :create]
-
+  before_action :admin_restriction, only: [:index]
   # GET /profiles
   # GET /profiles.json
   def index
@@ -31,7 +31,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to @profile, notice: 'Profile was successfully created.' }
+        format.html { redirect_to my_profile_url, notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to my_profile_url, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -66,15 +66,27 @@ class ProfilesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    
     def set_profile
-      @profile = Profile.find(params[:id])
-      # @profile = current_user.profile
+      # this condition will prevent users from seeing their profile_ids in url, while still allowing admins to edit and delete individual profiles
+      if admin_signed_in?
+        @profile = Profile.find(params[:id])
+      else
+        @profile = current_user.profile
+      end
+    end
+
+    def admin_restriction
+      unless admin_signed_in?
+        redirect_to root_url
+        flash[:notice] = "Yo, turn back!"
+      end
     end
 
     def profile_exists
       if current_user.profile
         respond_to do |format|
-          format.html { redirect_to root_path, notice: 'You already have a profile'}
+          format.html { redirect_to root_url, notice: 'You already have a profile'}
         end
       end
     end

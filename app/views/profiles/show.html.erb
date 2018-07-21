@@ -39,6 +39,10 @@
   <strong>Description:</strong>
   <%= @profile.description %>
 </p>
-
-<%= link_to 'Edit', edit_profile_path(@profile) %> |
-<%= link_to 'Back', profiles_path %>
+ 
+<% if admin_signed_in? %>
+  <%= link_to 'Edit', edit_profile_path(@profile) %>
+<% else %>
+  <%= link_to 'Edit', edit_my_profile_path %>
+<% end %>
+| <%= link_to 'Back', root_path %>
