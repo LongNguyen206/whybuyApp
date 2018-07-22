@@ -1,5 +1,5 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :edit, :update, :destroy]
+  before_action :set_profile, only: [:show, :update, :destroy]
   before_action :profile_exists, only: [:new, :create]
   # this will prevent normal users from viewing the list of all profiles
   before_action :admin_restriction, only: [:index]
@@ -22,6 +22,12 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    # this condition will prevent users from accessing the edit form of another user, while still allowing admins to edit and delete individual profiles
+    if admin_signed_in?
+      @profile = Profile.find(params[:id])
+    else
+      @profile = current_user.profile
+    end
   end
 
   # POST /profiles
@@ -44,7 +50,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to admin_redirect, notice: 'Profile was successfully created.' }
+        format.html { redirect_to profile_url(@profile), notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -58,7 +64,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to admin_redirect, notice: 'Profile was successfully updated.' }
+        format.html { redirect_to profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -81,12 +87,7 @@ class ProfilesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     
     def set_profile
-      # this condition will prevent users from seeing their profile_ids in url, while still allowing admins to edit and delete individual profiles
-      if admin_signed_in?
         @profile = Profile.find(params[:id])
-      else
-        @profile = current_user.profile
-      end
     end
 
     def admin_restriction
@@ -100,20 +101,12 @@ class ProfilesController < ApplicationController
       unless admin_signed_in?
         if current_user.profile
           respond_to do |format|
-            format.html { redirect_to root_url, notice: 'You already have a profile'}
+            format.html { redirect_to edit_profile_url(current_user.id), notice: 'You already have a profile. But you can edit it!'}
           end
         end
       end
     end
 
-    def admin_redirect
-      if admin_signed_in?
-        path = profile_url(@profile)
-      else
-        path = my_profile_path
-      end
-      return path
-    end
     # Never trust parameters from the scary internet, only allow the white list through.
     
     # Got rid of :user_id permitted parameter to avoid user assigning profile to different user

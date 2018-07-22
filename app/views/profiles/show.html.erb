@@ -58,7 +58,9 @@
 </p> 
 <% if admin_signed_in? %>
   <%= link_to 'Edit', edit_profile_path(@profile) %> | <%= link_to 'Back', profiles_path %>
+<% elsif @profile == current_user.profile %> 
+  <%= link_to 'Edit', edit_profile_path(@profile) %> | <%= link_to 'Back', root_path %>
 <% else %>
-  <%= link_to 'Edit', edit_my_profile_path %> | <%= link_to 'Back', root_path %>
+  <%= link_to 'Back', root_path %>
 <% end %>
 

@@ -17,3 +17,4 @@
 17. prevent users registereing as admins
 18. js popups
 19. uniqness of co name fields case insensitive, phone uniq
+20. admin can only create profiles for users without profile
