@@ -14,5 +14,5 @@ class Profile < ApplicationRecord
   validates :gender, inclusion: { in: %w(Male Female Other), message: "%{value} is not a valid gender" }, allow_nil: true
   
   # validates :terms_of_service, acceptance: true
-
+  mount_uploader :photo, PhotoUploader
 end

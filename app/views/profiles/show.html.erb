@@ -47,6 +47,10 @@
     <%= @profile.occupation %>
   </p>
 <% end %>
+<p>
+    <strong>Photo:</strong>
+    <%= image_tag(@profile.photo_url, width: "30%", height:"30%")%>
+</p>
 
 <p>
   <strong>Description:</strong>
