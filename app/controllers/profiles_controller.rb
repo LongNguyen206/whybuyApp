@@ -36,9 +36,15 @@ class ProfilesController < ApplicationController
     # link current user's id to the user_id of the profile being created
       @profile.user_id = current_user.id
     end
+
+    # if a user creates a profile with company name, rather than first and last name, assign iscompany to true in profile's table
+    unless @profile.company_name.nil?
+      @profile.iscompany = true
+    end
+
     respond_to do |format|
       if @profile.save
-        format.html { redirect_to profile_url(@profile), notice: 'Profile was successfully created.' }
+        format.html { redirect_to admin_redirect, notice: 'Profile was successfully created.' }
         format.json { render :show, status: :created, location: @profile }
       else
         format.html { render :new }
@@ -52,7 +58,7 @@ class ProfilesController < ApplicationController
   def update
     respond_to do |format|
       if @profile.update(profile_params)
-        format.html { redirect_to profile_url(@profile), notice: 'Profile was successfully updated.' }
+        format.html { redirect_to admin_redirect, notice: 'Profile was successfully updated.' }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :edit }
@@ -100,14 +106,22 @@ class ProfilesController < ApplicationController
       end
     end
 
+    def admin_redirect
+      if admin_signed_in?
+        path = profile_url(@profile)
+      else
+        path = my_profile_path
+      end
+      return path
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     
     # Got rid of :user_id permitted parameter to avoid user assigning profile to different user
     def profile_params
-      params.require(:profile).permit(:first_name, :last_name, :gender, :dob, :phone, :occupation, :description)
+      params.require(:profile).permit(:first_name, :last_name, :gender, :dob, :phone, :occupation, :description, :company_name, :photo, :iscompany)
     end
     # but allow user assignment to admin
     def admin_profile_params
-      params.require(:profile).permit(:user_id, :first_name, :last_name, :gender, :dob, :phone, :occupation, :description)
+      params.require(:profile).permit(:user_id, :first_name, :last_name, :gender, :dob, :phone, :occupation, :description, :company_name, :photo, :iscompany)
     end
 end

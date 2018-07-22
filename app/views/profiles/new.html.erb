@@ -1,7 +1,22 @@
 <div class="container">
 <h1>New Profile</h1>
 
-<%= render 'form', profile: @profile %>
+<!-- a checkbox that renders different profile creation forms -->
+<div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="isBusiness" >
+    <label class="custom-control-label" for="isBusiness">I am a Business</label>
+</div>
+
+<hr />
+
+<div id="businessForm" style="display: none">
+    <%= render 'form_business', profile: @profile %>
+</div>
+
+<div id="privateForm">
+    <%= render 'form_individual', profile: @profile %>
+</div>
+<!-- end of checkbox -->
 
 <%= link_to 'Back', root_path %>
 </div>

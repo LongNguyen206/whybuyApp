@@ -16,3 +16,15 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
+
+$(function () {
+    $("#isBusiness").click(function () {
+        if ($(this).is(":checked")) {
+            $("#businessForm").show();
+            $("#privateForm").hide();
+        } else {
+            $("#businessForm").hide();
+            $("#privateForm").show();
+        }
+    });
+});

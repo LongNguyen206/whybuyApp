@@ -1,8 +1,18 @@
 <div class="container">
 <h1>Editing Profile</h1>
 
-<%= render 'form', profile: @profile %>
+<%# render the relevant edit form depending on the type of profile %>
+<% if @profile.iscompany %>
+<%= render 'form_business', profile: @profile %>
+<% else %>
+<%= render 'form_individual', profile: @profile %>
+<% end %>
 
-<%= link_to 'Show', @profile %> |
-<%= link_to 'Back', root_path %>
+<%# change links for admin vs normal user - prevents id exposure in url %>
+<% if admin_signed_in? %>
+  <%= link_to 'Show', profile_path(@profile) %> | <%= link_to 'Back', profiles_path %>
+<% else %>
+  <%= link_to 'Show', my_profile_path %> | <%= link_to 'Back', root_path %>
+<% end %>
+
 </div>

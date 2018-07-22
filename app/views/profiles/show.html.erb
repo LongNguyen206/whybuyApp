@@ -1,48 +1,60 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
+  <strong>Email:</strong>
   <%= @profile.user.email %> <%#change user's object to show user's email%>
 </p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @profile.first_name %>
-</p>
+<%#  show different profile information depending on type of profile %>
+<% if @profile.iscompany %>
+  <p>
+    <strong>Company name:</strong>
+    <%= @profile.company_name %>
+  </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @profile.last_name %>
-</p>
+  <p>
+    <strong>Phone number:</strong>
+    <%= @profile.phone %>
+  </p>
+<% else %>
+  <p>
+    <strong>First name:</strong>
+    <%= @profile.first_name %>
+  </p>
 
-<p>
-  <strong>Gender:</strong>
-  <%= @profile.gender %>
-</p>
+  <p>
+    <strong>Last name:</strong>
+    <%= @profile.last_name %>
+  </p>
 
-<p>
-  <strong>Dob:</strong>
-  <%= @profile.dob %>
-</p>
+  <p>
+    <strong>Gender:</strong>
+    <%= @profile.gender %>
+  </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @profile.phone %>
-</p>
+  <p>
+    <strong>Date of birth:</strong>
+    <%= @profile.dob %>
+  </p>
 
-<p>
-  <strong>Occupation:</strong>
-  <%= @profile.occupation %>
-</p>
+  <p>
+    <strong>Mobile/Phone number:</strong>
+    <%= @profile.phone %>
+  </p>
+
+  <p>
+    <strong>Occupation:</strong>
+    <%= @profile.occupation %>
+  </p>
+<% end %>
 
 <p>
   <strong>Description:</strong>
   <%= @profile.description %>
-</p>
- 
+</p> 
 <% if admin_signed_in? %>
-  <%= link_to 'Edit', edit_profile_path(@profile) %>
+  <%= link_to 'Edit', edit_profile_path(@profile) %> | <%= link_to 'Back', profiles_path %>
 <% else %>
-  <%= link_to 'Edit', edit_my_profile_path %>
+  <%= link_to 'Edit', edit_my_profile_path %> | <%= link_to 'Back', root_path %>
 <% end %>
-| <%= link_to 'Back', root_path %>
+

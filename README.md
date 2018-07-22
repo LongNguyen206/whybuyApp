@@ -15,3 +15,5 @@
 15. add counter_cache to listings, reviews ,etc
 16. time spent on project (use wakatime)
 17. prevent users registereing as admins
+18. js popups
+19. uniqness of co name fields case insensitive, phone uniq

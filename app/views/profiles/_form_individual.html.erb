@@ -3,9 +3,9 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%# Do not show user association when creating a profile%>
-    <% if admin_signed_in?%>
-      <%= f.association :user, :label_method => :email %>
+    <%# Do not show user association when creating a profile unless it's admin viewing %>
+    <% if admin_signed_in? %>
+      <%= f.association :user, :label_method => :email, :label => "Email" %>
     <% end %>
     <%= f.input :first_name %>
     <%= f.input :last_name %>
@@ -14,6 +14,7 @@
     <%= f.input :phone %>
     <%= f.input :occupation %>
     <%= f.input :description %>
+    <%= f.input :photo %>
   </div>
 
   <div class="form-actions">
