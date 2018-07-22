@@ -1,9 +1,10 @@
 class ProfilesController < ApplicationController
-  before_action :set_profile, only: [:show, :update, :destroy]
+  before_action :authenticate
+  before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :profile_exists, only: [:new, :create]
   # this will prevent normal users from viewing the list of all profiles
   before_action :admin_restriction, only: [:index]
-  
+
   # GET /profiles
   # GET /profiles.json
   def index
@@ -23,10 +24,9 @@ class ProfilesController < ApplicationController
   # GET /profiles/1/edit
   def edit
     # this condition will prevent users from accessing the edit form of another user, while still allowing admins to edit and delete individual profiles
-    if admin_signed_in?
-      @profile = Profile.find(params[:id])
-    else
-      @profile = current_user.profile
+    unless admin_signed_in? || (@profile.user_id == current_user.id)
+      redirect_to root_path
+      flash[:notice] = "Can't touch dis!"
     end
   end
 
@@ -85,7 +85,12 @@ class ProfilesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    
+    def authenticate
+      unless user_signed_in? || admin_signed_in?
+        redirect_to new_user_session_url
+      end
+    end
+
     def set_profile
         @profile = Profile.find(params[:id])
     end

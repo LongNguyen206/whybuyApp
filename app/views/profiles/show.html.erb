@@ -56,11 +56,8 @@
   <strong>Description:</strong>
   <%= @profile.description %>
 </p> 
-<% if admin_signed_in? %>
-  <%= link_to 'Edit', edit_profile_path(@profile) %> | <%= link_to 'Back', profiles_path %>
-<% elsif @profile == current_user.profile %> 
-  <%= link_to 'Edit', edit_profile_path(@profile) %> | <%= link_to 'Back', root_path %>
-<% else %>
-  <%= link_to 'Back', root_path %>
+
+<% if admin_signed_in? || (@profile == current_user.profile) %>
+  <%= link_to 'Edit', edit_profile_path(@profile) %>
 <% end %>
 

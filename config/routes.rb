@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   # get '/profile/edit', to: 'profiles#edit', as: :edit_my_profile
 
   resources :listings
+  get '/my_listings', to: 'listings#indiv_index', as: :my_listings
+
 end

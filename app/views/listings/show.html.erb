@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
-  <%= @listing.user %>
+  <strong>By:</strong>
+  <%= link_to "#{@listing.user.profile.first_name || @listing.user.profile.company_name}", profile_url(@listing.user.profile.id) %>
 </p>
 
 <p>
@@ -25,5 +25,6 @@
   <%= @listing.description %>
 </p>
 
-<%= link_to 'Edit', edit_listing_path(@listing) %> |
-<%= link_to 'Back', listings_path %>
+<% if admin_signed_in? || (user_signed_in? && (@listing.user_id == current_user.id)) %>
+  <%= link_to 'Edit', edit_listing_path(@listing) %>
+<% end %>

@@ -6,5 +6,5 @@ class User < ApplicationRecord
  
   #deleting a user will delete the associated profile
   has_one :profile, validate: true, dependent: :destroy, inverse_of: :user
-
+  has_many :listings, dependent: :destroy
 end

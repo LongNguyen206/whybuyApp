@@ -15,9 +15,12 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= render 'layouts/navbar' %>
-    <%# this is where views from other controllers are rendered %>
-    <%= yield %>
-    <%# moving JS to the end of body to improve performance %>
+    <!-- Add side margins to whole app's content except navbar-->
+    <div class="container">
+      <%# this is where views from other controllers are rendered %>
+      <%= yield %>
+      <%# moving JS to the end of body to improve performance %>
+    </div>
    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>
