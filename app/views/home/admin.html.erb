@@ -1,0 +1,21 @@
+<% @listings.each do |listing| %>
+    <div class="card homepage">
+    <%= image_tag(listing.photo_url, class: "card-img-top") %>
+        <div class="card-body">
+            <h5 class="card-title"><%= link_to listing.title, listing_path(listing) %></h5>
+            <p class="card-text"><%= listing.description %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">$<%= "%.2f"%listing.rate %> AUD per day</li>
+            <li class="list-group-item">Deposit: $<%= "%.2f"%listing.deposit %> AUD</li>
+        </ul>
+        <div class="card-body">
+            <% if admin_signed_in? || (user_signed_in? && (listing.user_id == current_user.id)) %>
+                <%= link_to 'Edit', edit_listing_path(listing), class: "card-link" %>
+                <%= link_to 'Requests For This Item', listing_rent_requests_path(listing), class: "card-link"  %>
+            <% else %>
+                <%= link_to 'Rent This Item', new_listing_rent_request_path(listing), class: "card-link"  %>
+            <% end %>
+        </div>
+    </div>
+<% end %>   

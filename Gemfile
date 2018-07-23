@@ -35,6 +35,8 @@ gem 'simple_form'
 gem 'carrierwave', '~> 1.0'
 # Use fog-aws
 gem "fog-aws"
+# Use Stripe
+gem 'stripe-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
