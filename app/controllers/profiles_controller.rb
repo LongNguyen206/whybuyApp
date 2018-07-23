@@ -3,11 +3,13 @@ class ProfilesController < ApplicationController
   before_action :set_profile, only: [:show, :edit, :update, :destroy]
   before_action :profile_exists, only: [:new, :create]
   # this will prevent normal users from viewing the list of all profiles
-  before_action :admin_restriction, only: [:index]
 
   # GET /profiles
   # GET /profiles.json
   def index
+    unless admin_signed_in?
+      no_access
+    end
     @profiles = Profile.all.order(created_at: :asc)
   end
 
@@ -25,8 +27,7 @@ class ProfilesController < ApplicationController
   def edit
     # this condition will prevent users from accessing the edit form of another user, while still allowing admins to edit and delete individual profiles
     unless admin_signed_in? || (@profile.user_id == current_user.id)
-      redirect_to root_path
-      flash[:notice] = "Can't touch dis!"
+      no_access
     end
   end
 
@@ -95,18 +96,17 @@ class ProfilesController < ApplicationController
         @profile = Profile.find(params[:id])
     end
 
-    def admin_restriction
-      unless admin_signed_in?
-        redirect_to root_url
-        flash[:notice] = "Yo, turn back!"
-      end
+    def no_access
+      redirect_to root_path
+      flash[:notice] = "Can't touch dis!"
     end
+
 
     def profile_exists
       unless admin_signed_in?
         if current_user.profile
           respond_to do |format|
-            format.html { redirect_to edit_profile_url(current_user.id), notice: 'You already have a profile. But you can edit it!'}
+            format.html { redirect_to edit_profile_url(current_user.profile.id), notice: 'You already have a profile. But you can edit it!'}
           end
         end
       end

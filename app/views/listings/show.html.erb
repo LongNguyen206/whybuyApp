@@ -1,13 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>By:</strong>
-  <%= link_to "#{@listing.user.profile.first_name || @listing.user.profile.company_name}", profile_url(@listing.user.profile.id) %>
+  <strong>Title:</strong>
+  <%= @listing.title %>
 </p>
 
 <p>
-  <strong>Title:</strong>
-  <%= @listing.title %>
+  <strong>By:</strong>
+  <%= link_to "#{@listing.user.profile.first_name || @listing.user.profile.company_name}", profile_url(@listing.user.profile.id) %>
 </p>
 
 <p>
@@ -27,4 +27,7 @@
 
 <% if admin_signed_in? || (user_signed_in? && (@listing.user_id == current_user.id)) %>
   <%= link_to 'Edit', edit_listing_path(@listing) %>
+  | <%= link_to 'Requests for this item', listing_rent_requests_path(@listing) %>
+<% else %>
+  <%= link_to 'Rent', new_listing_rent_request_path(@listing) %>
 <% end %>

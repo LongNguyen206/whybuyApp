@@ -1,16 +1,22 @@
 class ListingsController < ApplicationController
+  # every action involving listings, except 'show', requires the user/admin to be logged in
   before_action :authenticate, except: [:show]
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
-  # this will prevent normal users from viewing the list of all profiles
-  before_action :admin_restriction, only: [:index]
+  # before_action :detach_associated, only: [:destroy]
  
   # GET /listings
   # GET /listings.json
   def index
+    # only allow admins to view the index page for listings (with CRUD rights)
+    unless admin_signed_in?
+      no_access
+    end
+    # order the listings for ADMIN view (users access listings list in home page)
     @listings = Listing.all.order(created_at: :asc)
   end
 
   def indiv_index
+    # here we define @listings for each user's profile view (when logged in)
     @listings = Listing.where(:user_id => current_user.id)
   end
   # GET /listings/1
@@ -26,8 +32,7 @@ class ListingsController < ApplicationController
   # GET /listings/1/edit
   def edit
     unless admin_signed_in? || (@listing.user_id == current_user.id)
-      redirect_to root_path
-      flash[:notice] = "Can't touch dis!"
+      no_access
     end
   end
 
@@ -74,6 +79,8 @@ class ListingsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    # request logging in for all operations with listings (except 'show')
     def authenticate
       unless user_signed_in? || admin_signed_in?
         redirect_to new_user_session_url
@@ -93,12 +100,14 @@ class ListingsController < ApplicationController
       return path
     end
 
-    def admin_restriction
-      unless admin_signed_in?
-        redirect_to root_url
-        flash[:notice] = "Yo, turn back!"
-      end
+    def no_access
+      redirect_to root_path
+      flash[:notice] = "Can't touch dis!"
     end
+
+    # def detach_associated
+    #   @listing.rent_requests.update_all(:listing_id => nil)
+    # end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
