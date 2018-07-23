@@ -8,7 +8,12 @@
     <%= f.input :title %>
     <%= f.input :rate %>
     <%= f.input :deposit %>
+    <%= f.input :date_from, 
+                :order => [:day, :month, :year] %>
+    <%= f.input :date_to, 
+                :order => [:day, :month, :year] %>
     <%= f.input :description %>
+    <%= f.input :photo, as: :file %>
   </div>
 
   <div class="form-actions">
