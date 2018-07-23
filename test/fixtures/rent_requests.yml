@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner: one
+  requester: one
+  total_price: 9.99
+  accepted: false
+
+two:
+  owner: two
+  requester: two
+  total_price: 9.99
+  accepted: false

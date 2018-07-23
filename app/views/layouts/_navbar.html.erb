@@ -7,14 +7,51 @@
     <% if user_signed_in? %> 
         <!-- prompt user to create a profile if they dont have one-->
         <% if current_user.profile.nil? %>
-            <li class="pure-menu-item"><%= link_to 'Create Profile', new_profile_path, class: "pure-menu-link" %></li>
+            <li class="pure-menu-item">
+                <%= link_to 'Create Profile', new_profile_path, class: "pure-menu-link" %>
+            </li>
         <!-- otherwise, show a link to user's profile page-->
-        <% else %>
-            <li class="pure-menu-item"><%= link_to "#{current_user.email}", my_profile_path, class: "pure-menu-link" %></li>
+        <% else %>      
+            <li class="pure-menu-item">
+                <%= link_to "Add a Listing", new_listing_path, class: "pure-menu-link" %>
+            </li>
+            <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+                <a id="menuLink1" class="pure-menu-link">
+                    <%= current_user.email %>
+                </a>
+                <ul class="pure-menu-children">
+                    <li class="pure-menu-item">
+                        <%= link_to "My Profile", profile_path(current_user.profile.id), class: "pure-menu-link" %>
+                    </li>
+                    <li class="pure-menu-item">
+                        <%= link_to "My Listings", my_listings_path, class: "pure-menu-link" %>
+                    </li>
+                    <li class="pure-menu-item">
+                        <%= link_to "My Requests", my_requests_path, class: "pure-menu-link" %>
+                    </li>
+                    <li class="pure-menu-item">
+                        <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "pure-menu-link" %>
+                    </li>
+                </ul>
+            </li>
         <% end %>
-        <li class="pure-menu-item"><%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "pure-menu-link" %></li>
-    <% elsif admin_signed_in? %> 
-        <li class="pure-menu-item"><%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "pure-menu-link" %></li>
+    <% elsif admin_signed_in? %>
+        <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a id="menuLink1" class="pure-menu-link">
+                Admin Dashboard
+            </a>
+            <ul class="pure-menu-children">
+                <li class="pure-menu-item">
+                    <%= link_to 'Profiles', profiles_path, class: "pure-menu-link" %>
+                </li>
+                <li class="pure-menu-item">
+                    <%= link_to 'Listings', listings_path, class: "pure-menu-link" %>
+                </li>
+                <li class="pure-menu-item">
+                    <%= link_to 'Log Out', destroy_user_session_path, method: :delete, class: "pure-menu-link" %>
+                </li>
+            </ul>
+        </li>
     <!-- if user not signed in - show Sign Up and Log In buttons -->
     <% else %>
         <li class="pure-menu-item"><%= link_to "Sign up", new_user_registration_path, class: "pure-menu-link" %></li>

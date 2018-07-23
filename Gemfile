@@ -29,6 +29,8 @@ gem 'jquery-rails'
 gem 'uglifier', '>= 1.3.0'
 # Use Simple Form
 gem 'simple_form'
+# Use Carrierwave
+gem 'carrierwave', '~> 1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 

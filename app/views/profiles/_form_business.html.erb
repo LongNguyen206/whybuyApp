@@ -3,14 +3,23 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%# Do not show user association when creating a profile unless it's admin viewing %>
+    <%# Do not show user association when creating a profile unless it's admin %>
     <% if admin_signed_in? %>
-      <%= f.association :user, :label_method => :email, :label => "Email" %>
+      <%= f.association :user,
+                        :label_method => :email, 
+                        :hint => 'Do not assign a profile if user already has one!',
+                        :label => "User" %>
     <% end %>
     <%= f.input :company_name %>
-    <%= f.input :phone %>
-    <%= f.input :description %>
-    <%= f.input :photo %>
+    <%= f.input :phone, 
+                :label => "Business phone",
+                :hint => 'No dashes' %>
+    <%= f.input :description, 
+                :placeholder => 'Tell something about your company',
+                :label => "About us"  %>
+    <%= f.input :photo, 
+                :as => :file,
+                :label => "Your logo" %>
   </div>
 
   <div class="form-actions">

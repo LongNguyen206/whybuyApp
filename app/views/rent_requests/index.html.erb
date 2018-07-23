@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+<% if admin_signed_in?%>
+  <h1>Requests for This Item</h1>
+<% else %>
+  <h1>Requests for Your Items</h1>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Requested by</th>
+      <th>Total price</th>
+      <th>Accepted?</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rent_requests.each do |rent_request| %>
+      <tr>
+        <td><%= rent_request.requester.email %></td>
+        <td><%= rent_request.total_price %></td>
+        <td><%= rent_request.accepted %></td>
+        <td><%= link_to 'Show', listing_rent_request_path(@listing,rent_request) %></td>
+        <% if admin_signed_in? %>
+          <td><%= link_to 'Edit', edit_listing_rent_request_path(@listing,rent_request) %></td>
+          <td><%= link_to 'Destroy', listing_rent_request_path(@listing,rent_request), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

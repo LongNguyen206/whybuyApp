@@ -3,18 +3,35 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%# Do not show user association when creating a profile unless it's admin viewing %>
+    <%# Do not show user association when creating a profile unless it's admin %>
     <% if admin_signed_in? %>
-      <%= f.association :user, :label_method => :email, :label => "Email" %>
+      <%= f.association :user,            
+                        :label_method => :email, 
+                        :hint => 'Do not assign a profile if user already has one!',
+                        :label => "User" %>
     <% end %>
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
-    <%= f.input :gender, as: :radio_buttons, collection: ['Male', 'Female', 'Other'], wrapper: :vertical_collection_inline %>
-    <%= f.input :dob %>
-    <%= f.input :phone %>
-    <%= f.input :occupation %>
-    <%= f.input :description %>
-    <%= f.input :photo %>
+    <%= f.input :first_name, label: "First name" %>
+    <%= f.input :last_name, label: "Last name" %>
+    <%= f.input :gender, 
+                :label => "I am",
+                :as => :radio_buttons, 
+                :collection => ['Male', 'Female', 'Better not say'], 
+                :wrapper => :vertical_collection_inline %>
+    <%= f.input :dob, 
+                :order => [:day, :month, :year], 
+                :start_year => Date.today.year - 90, 
+                :end_year => Date.today.year, 
+                :label => "Date of birth" %>
+    <%= f.input :phone,
+                :label => "Mobile/Home phone",
+                :hint => 'No dashes' %>
+    <%= f.input :occupation, placeholder: 'Brief description of what you do' %>
+    <%= f.input :description, 
+                :placeholder => 'Tell something about yourself',
+                :label => "About me"  %>
+    <%= f.input :photo, 
+                :as => :file,
+                :label => "Your profile photo" %>
   </div>
 
   <div class="form-actions">
