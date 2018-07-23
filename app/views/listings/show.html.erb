@@ -25,6 +25,21 @@
   <%= @listing.description %>
 </p>
 
+<p>
+  <strong>Date from:</strong>
+  <%= @listing.date_from %>
+</p>
+
+<p>
+  <strong>Date to:</strong>
+  <%= @listing.date_to %>
+</p>
+
+<p>
+    <strong>Photo:</strong>
+    <br>
+    <%= image_tag(@listing.photo_url, width: "30%", height:"30%")%>
+</p>
 <% if admin_signed_in? || (user_signed_in? && (@listing.user_id == current_user.id)) %>
   <%= link_to 'Edit', edit_listing_path(@listing) %>
   | <%= link_to 'Requests for this item', listing_rent_requests_path(@listing) %>

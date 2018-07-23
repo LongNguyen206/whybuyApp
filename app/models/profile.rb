@@ -9,7 +9,10 @@ class Profile < ApplicationRecord
   # require presence of the company name UNLESS it's an individual user
   validates :company_name, 
             :presence => true, 
-            :uniqueness => true, 
+            :uniqueness => { 
+              :case_sensitive => false, 
+              :message => "This company is already taken!" 
+            }, 
             :unless => :first_name?
   # require presence of first and last names UNLESS it's a company
   validates :first_name, 
