@@ -285,4 +285,6 @@ Devise.setup do |config|
   config.password_matches = 101
 
   config.min_password_score = 4
+
+  config.secret_key=ENV['DEVISE_SECRET_KEY']
 end
