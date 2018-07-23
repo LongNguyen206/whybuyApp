@@ -17,6 +17,8 @@ gem 'devise_zxcvbn'
 gem 'devise-uncommon_password'
 # Use Google-Omniauth-2
 gem 'omniauth-google-oauth2'
+# Use Figaro
+gem "figaro"
 # Use Bootstrap
 gem 'bootstrap', '~> 4.1.1'
 # User PureCSS
@@ -31,6 +33,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'simple_form'
 # Use Carrierwave
 gem 'carrierwave', '~> 1.0'
+# Use fog-aws
+gem "fog-aws"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
@@ -71,6 +75,12 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
+end
+
+
+group :production do
+  # Use postgresql as the database for Active Record
+  gem 'pg', '>= 0.18', '< 2.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

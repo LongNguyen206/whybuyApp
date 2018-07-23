@@ -24,3 +24,5 @@
 
 # Ignore my step-by-step notes.
 /step-by-step.md
+# Ignore application configuration
+/config/application.yml
