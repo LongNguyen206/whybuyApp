@@ -1,20 +1,19 @@
 class HomeController < ApplicationController
-  before_action :set_listings, only: [:page, :admin]
   before_action :admin_restriction, only: [:admin]
 
   def page
-
+    if user_signed_in?
+      @listings = Listing.where.not(user_id: current_user.id).order(created_at: :asc)
+    else
+      @listings = Listing.all.order(created_at: :asc)
+    end
   end
   
   def admin
-
+    @listings = Listing.all.order(created_at: :asc)
   end
 
   private
-
-  def set_listings
-    @listings = Listing.all.order(created_at: :asc)
-  end
 
   def admin_restriction
     unless admin_signed_in?

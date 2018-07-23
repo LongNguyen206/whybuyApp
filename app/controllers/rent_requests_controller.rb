@@ -74,7 +74,7 @@ class RentRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @rent_request.update(rent_request_params)
-        format.html { redirect_to listing_rent_request_path(@listing,@rent_request), notice: 'Rent request was successfully updated.' }
+        format.html { redirect_to edit_admin_redirect, notice: 'Rent request was successfully updated.' }
         format.json { render :show, status: :ok, location: @rent_request }
       else
         format.html { render :edit }
@@ -88,7 +88,7 @@ class RentRequestsController < ApplicationController
   def destroy
     @rent_request.destroy
     respond_to do |format|
-      format.html { redirect_to listing_rent_requests_path(@listing), notice: 'Rent request was successfully destroyed.' }
+      format.html { redirect_to destroy_admin_redirect, notice: 'Rent request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -101,6 +101,24 @@ class RentRequestsController < ApplicationController
       end
     end
     
+    def destroy_admin_redirect
+      if admin_signed_in?
+        path = listing_rent_requests_path(@listing)
+      else
+        path = my_requests_url
+      end
+      return path
+    end
+
+    def edit_admin_redirect
+      if admin_signed_in?
+        path = listing_rent_request_path(@listing,@rent_request)
+      else
+        path = my_requests_url
+      end
+      return path
+    end
+
     def no_access
       redirect_to root_path
       flash[:notice] = "Can't touch dis!"
