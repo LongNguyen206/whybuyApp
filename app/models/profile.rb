@@ -23,7 +23,11 @@ class Profile < ApplicationRecord
             :length => { maximum: 180, too_long: "Maximum %{count} characters allowed" }
   # only allow a gender to be of following options (further validated with the radio buttons in form)
   validates :gender, 
-            :inclusion => { in: %w(Male Female Other), message: "%{value} is not a valid gender" }, 
+            :inclusion => { in: [
+              'Male',
+              'Female',
+              'Better not say'
+            ]},
             :allow_nil => true
   
   # validates :terms_of_service, acceptance: true

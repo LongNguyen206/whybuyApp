@@ -29,7 +29,8 @@ Rails.application.routes.draw do
   resources :listings do
     resources :rent_requests
   end
-  get '/my_listings', to: 'listings#indiv_index', as: :my_listings
+  get '/my_requests', to: 'rent_requests#my_requests', as: :my_requests
+  get '/my_listings', to: 'listings#my_listings', as: :my_listings
 
   # resources :rent_requests
 end

@@ -15,10 +15,11 @@ class ListingsController < ApplicationController
     @listings = Listing.all.order(created_at: :asc)
   end
 
-  def indiv_index
+  def my_listings
     # here we define @listings for each user's profile view (when logged in)
     @listings = Listing.where(:user_id => current_user.id)
   end
+  
   # GET /listings/1
   # GET /listings/1.json
   def show

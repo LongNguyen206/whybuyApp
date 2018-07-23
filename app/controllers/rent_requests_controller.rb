@@ -3,14 +3,14 @@ class RentRequestsController < ApplicationController
   before_action :authenticate
   before_action :set_rent_request, only: [:show, :edit, :update, :destroy]
   # call a set_listing action before any other to determine which listing we are working with
-  before_action :set_listing
+  before_action :set_listing, except: [:my_requests]
 
   # GET /rent_requests
   # GET /rent_requests.json
 
   # index action will be used as an aggregated view for all the requests for a particular listing
   def index
-    if current_user.id != @listing.user_id
+    if user_signed_in? && (current_user.id != @listing.user_id)
       no_access
     else
       @rent_requests = RentRequest.where(:listing_id => @listing.id)
@@ -21,6 +21,10 @@ class RentRequestsController < ApplicationController
   # GET /rent_requests/1
   # GET /rent_requests/1.json
   def show
+  end
+
+  def my_requests
+    @rent_requests = RentRequest.where(:requester_id => current_user.id)
   end
 
   # GET /rent_requests/new
@@ -56,7 +60,7 @@ class RentRequestsController < ApplicationController
 
     respond_to do |format|
       if @rent_request.save
-        format.html { redirect_to listing_path(@listing), notice: 'Rent request was successfully created.' }
+        format.html { redirect_to listing_rent_requests_path(@listing), notice: 'Rent request was successfully created.' }
         format.json { render :show, status: :created, location: @rent_request }
       else
         format.html { render :new }
@@ -70,7 +74,7 @@ class RentRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @rent_request.update(rent_request_params)
-        format.html { redirect_to listing_path(@listing), notice: 'Rent request was successfully updated.' }
+        format.html { redirect_to listing_rent_request_path(@listing,@rent_request), notice: 'Rent request was successfully updated.' }
         format.json { render :show, status: :ok, location: @rent_request }
       else
         format.html { render :edit }
@@ -84,7 +88,7 @@ class RentRequestsController < ApplicationController
   def destroy
     @rent_request.destroy
     respond_to do |format|
-      format.html { redirect_to rent_requests_url, notice: 'Rent request was successfully destroyed.' }
+      format.html { redirect_to listing_rent_requests_path(@listing), notice: 'Rent request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
