@@ -13,12 +13,12 @@ class Listing < ApplicationRecord
 
   def end_date_after_start_date?
     if date_to < date_from
-      errors.add(:date_to, message: "End date must be after the start date")
+      errors.add(:date_to, "End date must be after the start date")
     end
   end
   def minimum_duration?
-    if date_to = date_from
-      errors(:date_to, message: "The minimum duration is 1 day")
+    if date_to == date_from
+      errors.add(:date_to, "The minimum duration is 1 day")
     end
   end
   mount_uploader :photo, PhotoUploader    
