@@ -4,8 +4,6 @@ class RentRequestsController < ApplicationController
   before_action :set_rent_request, only: [:show, :edit, :update, :destroy]
   # call a set_listing action before any other to determine which listing we are working with
   before_action :set_listing, except: [:my_requests]
-  after_action :calculate_total, only: [:update]
-
   # GET /rent_requests
   # GET /rent_requests.json
 
@@ -30,9 +28,12 @@ class RentRequestsController < ApplicationController
 
   # GET /rent_requests/new
   def new
+    if RentRequest.where("requester_id = ? AND listing_id = ?", current_user.id, @listing.id).exists?
+      redirect_to root_url
+      flash[:notice] = "Already requested"
     # we instantiate RentRequest objects as children of Listing object
-    if current_user.id == @listing.user_id
-      redirect_to root_path
+    elsif current_user.id == @listing.user_id
+      redirect_to root_url
       flash[:notice] = "You cannot request your own item!"
     else
       @rent_request = @listing.rent_requests.new
@@ -62,7 +63,7 @@ class RentRequestsController < ApplicationController
 
     respond_to do |format|
       if @rent_request.save
-        format.html { redirect_to admin_redirect, notice: 'Rent request was successfully created.' }
+        format.html { redirect_to new_charge_url(:total_price => @rent_request.total_price), notice: 'Rent request was successfully created.' }
         format.json { render :show, status: :created, location: @rent_request }
       else
         format.html { render :new }
@@ -126,10 +127,6 @@ class RentRequestsController < ApplicationController
     def no_access
       redirect_to root_path
       flash[:notice] = "Can't touch dis!"
-    end
-
-    def calculate_total
-      
     end
 
     def set_rent_request

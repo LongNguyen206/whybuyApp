@@ -20,7 +20,12 @@
 20. admin can only create profiles for users without profile
 21. edit forms
 comment code
-stripe
 geolocation
 amazon ses
 documentation
+search
+styling
+seed an admin
+calculate days when lisitng is published
+add request for my items page
+images carousel

@@ -32,5 +32,5 @@ Rails.application.routes.draw do
   get '/my_requests', to: 'rent_requests#my_requests', as: :my_requests
   get '/my_listings', to: 'listings#my_listings', as: :my_listings
 
-  # resources :rent_requests
+  resources :charges, :only => [:index, :create, :new]
 end

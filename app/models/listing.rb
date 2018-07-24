@@ -6,14 +6,20 @@ class Listing < ApplicationRecord
             :presence => true
   validates :rate, :deposit,
             :numericality => { greater_than_or_equal_to: 0 }
-  validates :description, :photo, :date_from,
+  validates :description, :photo, :date_from, :date_to,
             :presence => true
   validate  :end_date_after_start_date?
+  validate  :minimum_duration?
 
   def end_date_after_start_date?
     if date_to < date_from
-      errors.add :date_to, "must be after start date"
+      errors.add(:date_to, message: "End date must be after the start date")
     end
   end
-  mount_uploader :photo, PhotoUploader
+  def minimum_duration?
+    if date_to = date_from
+      errors(:date_to, message: "The minimum duration is 1 day")
+    end
+  end
+  mount_uploader :photo, PhotoUploader    
 end

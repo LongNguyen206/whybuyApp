@@ -4,5 +4,5 @@ class RentRequest < ApplicationRecord
   belongs_to :listing
   validates :days,
             :presence => true,
-            :numericality => { greater_than_or_equal_to: 0 }
+            :numericality => { greater_than: 1, message: "Duration is at least 1 day" }
 end

@@ -46,6 +46,6 @@ class PhotoUploader < CarrierWave::Uploader::Base
   # end
 
   def default_url
-    "/assets/fallback/default_photo.svg"
+    "/assets/fallback/default_photo.jpg"
   end
 end

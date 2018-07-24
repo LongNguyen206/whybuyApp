@@ -14,7 +14,11 @@
             <li class="list-group-item">Deposit: $<%= "%.2f"%listing.deposit %> AUD</li>
         </ul>
         <div class="card-body">
-            <%= link_to 'Rent This Item', new_listing_rent_request_path(listing), type: "button", class: "btn btn-sm btn-outline-secondary"  %>
+            <% if RentRequest.where("requester_id = ? AND listing_id = ?", current_user.id, listing.id).exists? %>
+                <button type="button", class="btn btn-sm btn-outline-secondary", disabled>Requested</button>
+            <% else %>
+                <%= link_to 'Rent This Item', new_listing_rent_request_path(listing), type: "button", class: "btn btn-sm btn-outline-secondary" %>
+            <%end%>
         </div>
     </div>
     </div>
