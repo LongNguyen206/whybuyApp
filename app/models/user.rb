@@ -18,8 +18,10 @@ class User < ApplicationRecord
            :dependent => :destroy
   has_many :sent_rent_requests, 
            :class_name => 'RentRequest', 
-           :foreign_key => 'requester_id'
+           :foreign_key => 'requester_id',
+           :dependent => :destroy
   has_many :received_rent_requests, 
            :class_name => 'RentRequest', 
-           :foreign_key => 'owner_id'
+           :foreign_key => 'owner_id',
+           :dependent => :destroy
 end
