@@ -1,16 +1,24 @@
-<%= form_tag charges_path do %>
-  <article>
-    <% if flash[:error].present? %>
-      <div id="error_explanation">
-        <p><%= flash[:error] %></p>
-      </div>
-    <% end %>
-  </article>
 
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+  </article>
+<div class="card text-center">
+  <div class="card-header">
+    Proceeding to payment
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Pay with Stripe</h5>
+    <p class="card-text">We will send you an email if your payment is successful</p>
+    <%= form_tag charges_path do %>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
           data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
           <%# data-image= %>
-          data-description="Your payment to ME"
+          data-description="Your payment"
           data-amount="<%= @amount %>"
           data-locale="auto"></script>
-<% end %>
+        <% end %>
+
+  </div>
+  <div class="card-footer text-muted">
+ 
+  </div>
+</div>
+  
