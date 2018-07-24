@@ -11,7 +11,7 @@ class Profile < ApplicationRecord
             :presence => true, 
             :uniqueness => { 
               :case_sensitive => false, 
-              :message => "This company is already taken!" 
+              :message => "This company name is already taken!" 
             }, 
             :unless => :first_name?
   # require presence of first and last names UNLESS it's a company

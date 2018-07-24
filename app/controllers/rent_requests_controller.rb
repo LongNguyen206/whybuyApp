@@ -4,6 +4,7 @@ class RentRequestsController < ApplicationController
   before_action :set_rent_request, only: [:show, :edit, :update, :destroy]
   # call a set_listing action before any other to determine which listing we are working with
   before_action :set_listing, except: [:my_requests]
+  after_action :calculate_total, only: [:update]
 
   # GET /rent_requests
   # GET /rent_requests.json
@@ -13,7 +14,7 @@ class RentRequestsController < ApplicationController
     if user_signed_in? && (current_user.id != @listing.user_id)
       no_access
     else
-      @rent_requests = RentRequest.where(:listing_id => @listing.id)
+      @rent_requests = RentRequest.where(:listing_id => @listing.id).order(created_at: :asc)
     end
     # @rent_requests = RentRequest.all.order(created_at: :asc)
   end
@@ -24,7 +25,7 @@ class RentRequestsController < ApplicationController
   end
 
   def my_requests
-    @rent_requests = RentRequest.where(:requester_id => current_user.id)
+    @rent_requests = RentRequest.where(:requester_id => current_user.id).order(created_at: :asc)
   end
 
   # GET /rent_requests/new
@@ -57,10 +58,11 @@ class RentRequestsController < ApplicationController
     @rent_request.owner_id = @listing.user.id
     # the current user is the requester
     @rent_request.requester_id = current_user.id
+    @rent_request.total_price = @rent_request.days * @listing.rate
 
     respond_to do |format|
       if @rent_request.save
-        format.html { redirect_to listing_rent_requests_path(@listing), notice: 'Rent request was successfully created.' }
+        format.html { redirect_to admin_redirect, notice: 'Rent request was successfully created.' }
         format.json { render :show, status: :created, location: @rent_request }
       else
         format.html { render :new }
@@ -74,6 +76,8 @@ class RentRequestsController < ApplicationController
   def update
     respond_to do |format|
       if @rent_request.update(rent_request_params)
+        @rent_request.total_price = @rent_request.days * @listing.rate
+        @rent_request.update(rent_request_params)
         format.html { redirect_to edit_admin_redirect, notice: 'Rent request was successfully updated.' }
         format.json { render :show, status: :ok, location: @rent_request }
       else
@@ -88,7 +92,7 @@ class RentRequestsController < ApplicationController
   def destroy
     @rent_request.destroy
     respond_to do |format|
-      format.html { redirect_to destroy_admin_redirect, notice: 'Rent request was successfully destroyed.' }
+      format.html { redirect_to admin_redirect, notice: 'Rent request was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -101,7 +105,7 @@ class RentRequestsController < ApplicationController
       end
     end
     
-    def destroy_admin_redirect
+    def admin_redirect
       if admin_signed_in?
         path = listing_rent_requests_path(@listing)
       else
@@ -124,6 +128,10 @@ class RentRequestsController < ApplicationController
       flash[:notice] = "Can't touch dis!"
     end
 
+    def calculate_total
+      
+    end
+
     def set_rent_request
       @rent_request = RentRequest.find(params[:id])
     end
@@ -135,6 +143,6 @@ class RentRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def rent_request_params
-      params.require(:rent_request).permit(:total_price)
+      params.require(:rent_request).permit(:days)
     end
 end

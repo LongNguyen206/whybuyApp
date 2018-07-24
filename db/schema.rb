@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_23_053416) do
+ActiveRecord::Schema.define(version: 2018_07_23_121722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 2018_07_23_053416) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "listing_id"
+    t.integer "days"
     t.index ["listing_id"], name: "index_rent_requests_on_listing_id"
     t.index ["owner_id"], name: "index_rent_requests_on_owner_id"
     t.index ["requester_id"], name: "index_rent_requests_on_requester_id"

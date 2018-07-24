@@ -11,8 +11,12 @@ $theme-colors: ( "bootstrap": #563d7c, "simpleform": #00617f );
     float: right;
 }
 
+.img_cont {
+    width: 100%;
+    height: 225px;
+}
 .homepage {
+    height: 450px;
     width: 18rem;
     margin: 30px;
-    float: left;
 }

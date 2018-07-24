@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Item:</strong>
+  <%= link_to @rent_request.listing.title, listing_path(@rent_request.listing) %>
+</p>
+
+<p>
   <strong>Owner:</strong>
   <%= @rent_request.owner.email %>
 </p>
@@ -11,8 +16,18 @@
 </p>
 
 <p>
+  <strong>Duration:</strong>
+  <%= @rent_request.days %> days
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  $<%= @rent_request.listing.rate %> AUD per day
+</p>
+
+<p>
   <strong>Total price:</strong>
-  <%= @rent_request.total_price %>
+  $<%= @rent_request.total_price %> AUD
 </p>
 
 <p>

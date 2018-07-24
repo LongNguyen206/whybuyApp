@@ -1,6 +1,10 @@
+<div class="pure-g">
 <% @listings.each do |listing| %>
+<div class="pure-u-1-3">
     <div class="card homepage">
-    <%= image_tag(listing.photo_url, class: "card-img-top") %>
+    <div class="img_cont">
+        <%= image_tag(listing.photo_url, class: "card-img-top") %>
+    </div>
         <div class="card-body">
             <h5 class="card-title"><%= link_to listing.title, listing_path(listing) %></h5>
             <p class="card-text"><%= listing.description %></p>
@@ -10,7 +14,10 @@
             <li class="list-group-item">Deposit: $<%= "%.2f"%listing.deposit %> AUD</li>
         </ul>
         <div class="card-body">
-            <%= link_to 'Rent This Item', new_listing_rent_request_path(listing), class: "card-link"  %>
+            <%= link_to 'Rent This Item', new_listing_rent_request_path(listing), type: "button", class: "btn btn-sm btn-outline-secondary"  %>
         </div>
     </div>
+    </div>
 <% end %>            
+</div>
+ 

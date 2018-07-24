@@ -4,11 +4,9 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%# f.association :owner %>
-    <%# f.association :requester %>
-    <%# f.association :listing %>
-    <%= f.input :total_price %>
-    <%# f.input :accepted %>
+    <%= f.input :days,
+                :label => "I want to rent it for",
+                :placeholder => "days" %>
   </div>
 
   <div class="form-actions">

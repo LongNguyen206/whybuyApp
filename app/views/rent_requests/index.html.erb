@@ -9,6 +9,7 @@
   <thead>
     <tr>
       <th>Requested by</th>
+      <th>Duration</th>
       <th>Total price</th>
       <th>Accepted?</th>
       <th colspan="3"></th>
@@ -19,7 +20,8 @@
     <% @rent_requests.each do |rent_request| %>
       <tr>
         <td><%= rent_request.requester.email %></td>
-        <td><%= rent_request.total_price %></td>
+        <td><%= rent_request.days %> days</td>
+        <td>$<%= rent_request.total_price %> AUD</td>
         <td><%= rent_request.accepted %></td>
         <td><%= link_to 'Show', listing_rent_request_path(@listing,rent_request) %></td>
         <% if admin_signed_in? %>

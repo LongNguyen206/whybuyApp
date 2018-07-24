@@ -46,6 +46,6 @@ class PhotoUploader < CarrierWave::Uploader::Base
   # end
 
   def default_url
-    "https://s3-ap-southeast-2.amazonaws.com/whybuy-bucket/fallback/default_photo.svg"
+    "/assets/fallback/default_photo.svg"
   end
 end
